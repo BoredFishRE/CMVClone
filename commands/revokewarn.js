@@ -1,9 +1,9 @@
 const { MessageEmbed } = require("discord.js");
 
 module.exports = {
-  name: "mute",
-  description: "Mutes a member",
-  aliases: ["addmute", "am"],
+  name: "revokewarn",
+  description: "Revokes P role on a member",
+  aliases: ["rw"],
   execute(message, args, client) {
     function clean(text) {
       if (typeof text === "string")
@@ -25,35 +25,38 @@ module.exports = {
       if (message.mentions.users.first()) {
         try {
           let member = message.mentions.members.first();
-          if (member.roles.cache.some((r) => r.name === "P3")) {
-            member.roles.remove(P3);
-            member.roles.add(P4);
-            message.channel.send(
-              `${message.mentions.users.first()} had P3, assigning P4.`
-            );
-          } else if (member.roles.cache.some((r) => r.name === "P1")) {
+          if (member.roles.cache.some((r) => r.name === "P1")) {
             member.roles.remove(P1);
-            member.roles.add(P3);
             message.channel.send(
-              `${message.mentions.members.first()} now has P3.`
+              `${message.mentions.members.first()} had P1, now does not have any P roles.`
             );
           } else if (member.roles.cache.some((r) => r.name === "P2")) {
             member.roles.remove(P2);
+            member.roles.add(P1);
+            message.channel.send(
+              `${message.mentions.members.first()} had P2, going back to P1.`
+            );
+          } else if (member.roles.cache.some((r) => r.name === "P3")) {
+            member.roles.remove(P3);
+            member.roles.add(P2);
+            message.channel.send(
+              `${message.mentions.members.first()} had P3, going back to P2.`
+            );
+          } else if (member.roles.cache.some((r) => r.name === "P4")) {
+            member.roles.remove(P4);
             member.roles.add(P3);
             message.channel.send(
-              `${message.mentions.members.first()} now has P3.`
+              `${message.mentions.members.first()} had P4, going back to P3.`
             );
-          } else if (
-            member.roles.cache.some((r) => r.name === "P4") ||
-            member.roles.cache.some((r) => r.name === "P5")
-          ) {
+          } else if (member.roles.cache.some((r) => r.name === "P5")) {
+            member.roles.remove(P5);
+            member.roles.add(P4);
             message.channel.send(
-              `${message.mentions.members.first()} either has P4 or P5. No action was taken.`
+              `${message.mentions.members.first()} had P5, going back to P4.`
             );
           } else {
-            member.roles.add(P3);
             message.channel.send(
-              `${message.mentions.members.first()} now has P3.`
+              `${message.mentions.members.first()} has no P roles. No changes were made.`
             );
           }
         } catch (error) {

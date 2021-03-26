@@ -1,4 +1,3 @@
-
 const fs = require("fs");
 const Discord = require("discord.js");
 const client = new Discord.Client();
@@ -49,15 +48,21 @@ client.on("message", (message) => {
     return;
 
   const args = message.content.slice(prefix.length).trim().split(/ +/);
-  const command = args.shift().toLowerCase();
-  if (!client.commands.has(command)) return;
+  const commandName = args.shift().toLowerCase();
+  const command =
+    client.commands.get(commandName) ||
+    client.commands.find(
+      (cmd) => cmd.aliases && cmd.aliases.includes(commandName)
+    );
+
+  if (!command) return;
 
   try {
-    client.commands.get(command).execute(message, args, client);
+    command.execute(message, args, client);
   } catch (error) {
     console.log(error);
     message.channel.send(
-      `\`An unexpected error has occurred! Please try again later! Please report this to @BoredFish#4269. More technical details:\` \`\`\`xl\n${clean(
+      `Aw maaaaan. I couldn't do the thing I needed to do. <@388813100964642816> should prob know about this. The technical stuff\` \`\`\`xl\n${clean(
         error
       )}\n\`\`\``
     );

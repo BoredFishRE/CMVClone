@@ -1,9 +1,9 @@
 const { MessageEmbed } = require("discord.js");
 
 module.exports = {
-  name: "mute",
-  description: "Mutes a member",
-  aliases: ["addmute", "am"],
+  name: "revokemute",
+  description: "Revokes P role on a member",
+  aliases: ["rm"],
   execute(message, args, client) {
     function clean(text) {
       if (typeof text === "string")
@@ -27,33 +27,30 @@ module.exports = {
           let member = message.mentions.members.first();
           if (member.roles.cache.some((r) => r.name === "P3")) {
             member.roles.remove(P3);
-            member.roles.add(P4);
             message.channel.send(
-              `${message.mentions.users.first()} had P3, assigning P4.`
+              `${message.mentions.users.first()} had P3, now has no P role.`
             );
           } else if (member.roles.cache.some((r) => r.name === "P1")) {
-            member.roles.remove(P1);
-            member.roles.add(P3);
             message.channel.send(
-              `${message.mentions.members.first()} now has P3.`
+              `${message.mentions.members.first()} has P1. No action was taken, use *revokewarn instead.`
             );
           } else if (member.roles.cache.some((r) => r.name === "P2")) {
-            member.roles.remove(P2);
+            message.channel.send(
+              `${message.mentions.members.first()} had P2. No action was taken, use *revokewarn instead.`
+            );
+          } else if (member.roles.cache.some((r) => r.name === "P5")) {
+            message.channel.send(
+              `${message.mentions.members.first()} had P5. No action was taken, use *revokewarn instead.`
+            );
+          } else if (member.roles.cache.some((r) => r.name === "P4")) {
+            member.roles.remove(P4);
             member.roles.add(P3);
             message.channel.send(
-              `${message.mentions.members.first()} now has P3.`
-            );
-          } else if (
-            member.roles.cache.some((r) => r.name === "P4") ||
-            member.roles.cache.some((r) => r.name === "P5")
-          ) {
-            message.channel.send(
-              `${message.mentions.members.first()} either has P4 or P5. No action was taken.`
+              `${message.mentions.members.first()} has P4. Putting P3 on.`
             );
           } else {
-            member.roles.add(P3);
             message.channel.send(
-              `${message.mentions.members.first()} now has P3.`
+              `${message.mentions.members.first()} Has no P role, aborting...`
             );
           }
         } catch (error) {
