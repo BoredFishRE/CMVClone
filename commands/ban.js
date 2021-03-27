@@ -44,6 +44,9 @@ module.exports = {
         "What are you doing stepbro?",
         "Why are you running? You ain't no mod, so don't try it again!",
         `This unauthorised usage of mod commands has been reported to feiks with ReportID #${reprtID}`,
+        "Leave me alone man, I can't do that.",
+        "a",
+        "Do not cite the deep magic to me witch, I was there when it was written.",
       ];
       const random = Math.floor(Math.random() * modMessage.length);
       const randomMessage = modMessage[random];

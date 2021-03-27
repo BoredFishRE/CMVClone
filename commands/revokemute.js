@@ -72,10 +72,13 @@ module.exports = {
         "You ain't no mod. Get outta here man.",
         "Well, this is awkward. So, you're not a mod, but you're trying to do mod stuff, but you can't do that, so I can't do my thing... Welp. Time to sit in the void until someone calls for me again.",
         "Bro, what are you doing? You aren't a mod man! Why are you trying it?",
-        "You're getting cancelled for doing that",
+        "You're' getting cancelled for doing that",
         "What are you doing stepbro?",
         "Why are you running? You ain't no mod, so don't try it again!",
         `This unauthorised usage of mod commands has been reported to feiks with ReportID #${reprtID}`,
+        "Leave me alone man, I can't do that.",
+        "a",
+        "Do not cite the deep magic to me witch, I was there when it was written.",
       ];
       const random = Math.floor(Math.random() * modMessage.length);
       const randomMessage = modMessage[random];
