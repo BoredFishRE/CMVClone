@@ -12,6 +12,7 @@ module.exports = {
           .replace(/@/g, "@" + String.fromCharCode(8203));
       else return text;
     }
+    let guild = message.guild;
     if (
       message.member.roles.cache.some(
         (role) => role.name === "Allows magic to happen"
@@ -22,41 +23,41 @@ module.exports = {
       let P3 = message.guild.roles.cache.find((r) => r.name === "P3");
       let P4 = message.guild.roles.cache.find((r) => r.name === "P4");
       let P5 = message.guild.roles.cache.find((r) => r.name === "P5");
-      if (message.mentions.users.first()) {
+      const member = message.mentions.members.first() || guild.member(args[0]) || guild.member(args)
+      if (member) {
         try {
-          let member = message.mentions.members.first();
           if (member.roles.cache.some((r) => r.name === "P1")) {
             member.roles.remove(P1);
             message.channel.send(
-              `${message.mentions.members.first()} had P1, now does not have any P roles.`
+              `${member} had P1, now does not have any P roles.`
             );
           } else if (member.roles.cache.some((r) => r.name === "P2")) {
             member.roles.remove(P2);
             member.roles.add(P1);
             message.channel.send(
-              `${message.mentions.members.first()} had P2, going back to P1.`
+              `${member} had P2, going back to P1.`
             );
           } else if (member.roles.cache.some((r) => r.name === "P3")) {
             member.roles.remove(P3);
             member.roles.add(P2);
             message.channel.send(
-              `${message.mentions.members.first()} had P3, going back to P2.`
+              `${member} had P3, going back to P2.`
             );
           } else if (member.roles.cache.some((r) => r.name === "P4")) {
             member.roles.remove(P4);
             member.roles.add(P3);
             message.channel.send(
-              `${message.mentions.members.first()} had P4, going back to P3.`
+              `${member} had P4, going back to P3.`
             );
           } else if (member.roles.cache.some((r) => r.name === "P5")) {
             member.roles.remove(P5);
             member.roles.add(P4);
             message.channel.send(
-              `${message.mentions.members.first()} had P5, going back to P4.`
+              `${member} had P5, going back to P4.`
             );
           } else {
             message.channel.send(
-              `${message.mentions.members.first()} has no P roles. No changes were made.`
+              `${member} has no P roles. No changes were made.`
             );
           }
         } catch (error) {
@@ -67,9 +68,10 @@ module.exports = {
           );
           console.log(error);
         }
-      } else if (!message.mentions.members.first()) {
+      } else if (!member) {
+        console.log(member)
         message.channel.send(
-          "You need to mention someone. Mention someone next time."
+          "You need to actually like put the person you want in the mention, otherwise I can't do crap."
         );
       }
     } else {

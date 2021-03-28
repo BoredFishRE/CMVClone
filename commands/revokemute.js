@@ -12,6 +12,7 @@ module.exports = {
           .replace(/@/g, "@" + String.fromCharCode(8203));
       else return text;
     }
+    let guild = message.guild;
     if (
       message.member.roles.cache.some(
         (role) => role.name === "Allows magic to happen"
@@ -22,35 +23,35 @@ module.exports = {
       let P3 = message.guild.roles.cache.find((r) => r.name === "P3");
       let P4 = message.guild.roles.cache.find((r) => r.name === "P4");
       let P5 = message.guild.roles.cache.find((r) => r.name === "P5");
-      if (message.mentions.users.first()) {
+      const member = message.mentions.members.first() || guild.member(args[0]) || guild.member(args)
+      if (member) {
         try {
-          let member = message.mentions.members.first();
           if (member.roles.cache.some((r) => r.name === "P3")) {
             member.roles.remove(P3);
             message.channel.send(
-              `${message.mentions.users.first()} had P3, now has no P role.`
+              `${member} had P3, now has no P role.`
             );
           } else if (member.roles.cache.some((r) => r.name === "P1")) {
             message.channel.send(
-              `${message.mentions.members.first()} has P1. No action was taken, use *revokewarn instead.`
+              `${member} has P1. No action was taken, use *revokewarn instead.`
             );
           } else if (member.roles.cache.some((r) => r.name === "P2")) {
             message.channel.send(
-              `${message.mentions.members.first()} had P2. No action was taken, use *revokewarn instead.`
+              `${member} had P2. No action was taken, use *revokewarn instead.`
             );
           } else if (member.roles.cache.some((r) => r.name === "P5")) {
             message.channel.send(
-              `${message.mentions.members.first()} had P5. No action was taken, use *revokewarn instead.`
+              `${member} had P5. No action was taken, use *revokewarn instead.`
             );
           } else if (member.roles.cache.some((r) => r.name === "P4")) {
             member.roles.remove(P4);
             member.roles.add(P3);
             message.channel.send(
-              `${message.mentions.members.first()} has P4. Putting P3 on.`
+              `${member} has P4. Putting P3 on.`
             );
           } else {
             message.channel.send(
-              `${message.mentions.members.first()} Has no P role, aborting...`
+              `${member} Has no P role, aborting...`
             );
           }
         } catch (error) {
@@ -61,9 +62,10 @@ module.exports = {
           );
           console.log(error);
         }
-      } else if (!message.mentions.members.first()) {
+      } else if (!member) {
+        console.log(member)
         message.channel.send(
-          "You need to mention someone. Mention someone next time."
+          "You need to actually like put the person you want in the message, otherwise I can't do crap."
         );
       }
     } else {

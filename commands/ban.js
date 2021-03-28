@@ -11,15 +11,17 @@ module.exports = {
           .replace(/@/g, "@" + String.fromCharCode(8203));
       else return text;
     }
+    let guild = message.guild;
     if (
       message.member.roles.cache.some(
         (role) => role.name === "Allows magic to happen"
       )
     ) {
-      if (message.mentions.users.first()) {
+      const member = message.mentions.members.first() || guild.member(args[0]) || guild.member(args)
+      if (member) {
         try {
           message.channel.send(
-            `Haha ${message.mentions.users.first()} got absolutley nae naed.`
+            `Haha ${member} got absolutley nae naed.`
           );
         } catch (error) {
           message.channel.send(
@@ -29,7 +31,7 @@ module.exports = {
           );
           console.log(error);
         }
-      } else if (!message.mentions.members.first()) {
+      } else if (!member) {
         message.channel.send(
           "You gonna ban someone? Or are you testing perms. If you're just testing perms, I'll leave you alone... probably not I can't tell if you've already run this command."
         );

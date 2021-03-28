@@ -1,6 +1,9 @@
 const fs = require("fs");
-const Discord = require("discord.js");
-const client = new Discord.Client();
+const Discord = require("discord.js");  
+const { Client, Intents } = require("discord.js");
+client = new Client({
+  ws: { intents: Intents.ALL },
+});
 const config = require("./config.json");
 const { prefix } = require("./config.json");
 client.commands = new Discord.Collection();
