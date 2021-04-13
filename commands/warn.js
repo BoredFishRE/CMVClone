@@ -23,43 +23,51 @@ module.exports = {
       let P3 = guild.roles.cache.find((r) => r.name === "P3");
       let P4 = guild.roles.cache.find((r) => r.name === "P4");
       let P5 = guild.roles.cache.find((r) => r.name === "P5");
-      const member = message.mentions.members.first() || guild.member(args[0]) || guild.member(args)
+      const member =
+        message.mentions.members.first() ||
+        guild.member(args[0]) ||
+        guild.member(args);
       if (member) {
         try {
-          console.log(member)
-          if (member.roles.cache.some((r) => r.name === "P1")) {
-            member.roles.remove(P1);
-            member.roles.add(P2);
-            message.channel.send(
-              `${member} had P1, assigning P2.`
-            );
-          } else if (member.roles.cache.some((r) => r.name === "P2")) {
-            member.roles.remove(P2);
-            member.roles.add(P3);
-            message.channel.send(
-              `${member} had P2, assigning P3.`
-            );
-          } else if (member.roles.cache.some((r) => r.name === "P3")) {
-            member.roles.remove(P3);
-            member.roles.add(P4);
-            message.channel.send(
-              `${member} had P3, assigning P4.`
-            );
-          } else if (member.roles.cache.some((r) => r.name === "P4")) {
-            member.roles.remove(P4);
-            member.roles.add(P5);
-            message.channel.send(
-              `${member} had P4, assigning P5. This is this member's last chance.`
-            );
-          } else if (member.roles.cache.some((r) => r.name === "P5")) {
-            message.channel.send(
-              `${member} should probably be banned but idk I'm just a bot.`
-            );
-          } else {
-            member.roles.add(P1);
-            message.channel.send(
-              `This is ${member}'s first warn. They are now at P1.`
-            );
+          let HasP1 = member.roles.cache.some((r) => r.name === "P1");
+          let HasP2 = member.roles.cache.some((r) => r.name === "P2");
+          let HasP3 = member.roles.cache.some((r) => r.name === "P3");
+          let HasP4 = member.roles.cache.some((r) => r.name === "P4");
+          let HasP5 = member.roles.cache.some((r) => r.name === "P5");
+          console.log(member);
+          switch (true) {
+            case HasP1:
+              member.roles.remove(P1);
+              member.roles.add(P2);
+              message.channel.send(`${member} had P1, assigning P2.`);
+              break;
+            case HasP2:
+              member.roles.remove(P2);
+              member.roles.add(P3);
+              message.channel.send(`${member} had P2, assigning P3.`);
+              break;
+            case HasP3:
+              member.roles.remove(P3);
+              member.roles.add(P4);
+              message.channel.send(`${member} had P3, assigning P4.`);
+              break;
+            case HasP4:
+              member.roles.remove(P4);
+              member.roles.add(P5);
+              message.channel.send(
+                `${member} had P4, assigning P5. This is this member's last chance.`
+              );
+              break;
+            case HasP5:
+              message.channel.send(
+                `${member} should probably be banned but idk I'm just a bot.`
+              );
+              break;
+            default:
+              member.roles.add(P1);
+              message.channel.send(
+                `This is ${member}'s first warn. They are now at P1.`
+              );
           }
         } catch (error) {
           message.channel.send(
@@ -70,7 +78,7 @@ module.exports = {
           console.log(error);
         }
       } else if (!member) {
-        console.log(member)
+        console.log(member);
         message.channel.send(
           "You need to actually like put the person you want in the message, otherwise I can't do crap."
         );
