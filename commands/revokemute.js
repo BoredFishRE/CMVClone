@@ -18,6 +18,7 @@ module.exports = {
         (role) => role.name === "Allows magic to happen"
       )
     ) {
+      //This does the inverse of warn.js. Removes roles instead of adding. So, instead of P1, P2, P3, it does P3, P2, P1. Detailed stuff is in warn.js.
       let P1 = message.guild.roles.cache.find((r) => r.name === "P1");
       let P2 = message.guild.roles.cache.find((r) => r.name === "P2");
       let P3 = message.guild.roles.cache.find((r) => r.name === "P3");

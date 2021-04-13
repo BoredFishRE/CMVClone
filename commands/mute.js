@@ -18,6 +18,7 @@ module.exports = {
         (role) => role.name === "Allows magic to happen"
       )
     ) {
+      //This really works the same way as warn.js. If you wanna find out how it works, go to warn.js.
       let P1 = message.guild.roles.cache.find((r) => r.name === "P1");
       let P2 = message.guild.roles.cache.find((r) => r.name === "P2");
       let P3 = message.guild.roles.cache.find((r) => r.name === "P3");

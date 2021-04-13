@@ -5,6 +5,7 @@ module.exports = {
   description: "About the Bot",
   aliases: ["cmvabout"],
   execute(message, args, client) {
+    //embed go brrrrr
     let embed = new MessageEmbed()
       .setColor("#42f2f5")
       .setThumbnail("https://cdn.discordapp.com/avatars/815999410327781396/7f71df8e2269680681d08e86f8c9279b.png?size=128")
