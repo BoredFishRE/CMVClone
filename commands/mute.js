@@ -35,33 +35,59 @@ module.exports = {
           let HasP3 = member.roles.cache.some((r) => r.name === "P3");
           let HasP4 = member.roles.cache.some((r) => r.name === "P4");
           let HasP5 = member.roles.cache.some((r) => r.name === "P5");
+          const muteEmbed = new MessageEmbed().setColor("#ff0000").setAuthor(
+            member.user.username,
+            member.user.displayAvatarURL({
+              format: "jpg",
+              dynamic: "true",
+            })
+          );
           console.log(member);
           switch (true) {
             case HasP1:
               member.roles.remove(P1);
               member.roles.add(P3);
-              message.channel.send(`${member} now has P3.`);
+              muteEmbed.addField(
+                `${member.user.tag} now has P3.`,
+                "Removed P1."
+              );
               break;
             case HasP2:
               member.roles.remove(P2);
               member.roles.add(P3);
-              message.channel.send(`${member} now has P3.`);
+              muteEmbed.addField(
+                `${member.user.tag} now has P3.`,
+                "P2 removed."
+              );
               break;
             case HasP3:
               member.roles.remove(P3);
               member.roles.add(P4);
-              message.channel.send(`${member} had P3, assigning P4.`);
+              muteEmbed.addField(
+                `${member.user.tag} had P3`,
+                "Assigning P4."
+              );
               break;
             case HasP4:
-              message.channel.send(`${member} has P4. No action was taken.`);
+              muteEmbed.addField(
+                `${member.user.tag} has P4.`,
+                "No action was taken."
+              );
               break;
             case HasP5:
-              message.channel.send(`${member} has P5. No action was taken.`);
+              muteEmbed.addField(
+                `${member.user.tag} has P5.`,
+                `No action was taken.`
+              );
               break;
             default:
               member.roles.add(P3);
-              message.channel.send(`${member} now has P3.`);
+              muteEmbed.addField(
+                `${member.user.tag} now has P3.`,
+                "First mute as far as I know."
+              );
           }
+          message.channel.send(muteEmbed)
         } catch (error) {
           message.channel.send(
             `Aw maaaaan. I couldn't do the thing I needed to do. <@388813100964642816> should prob know about this. The technical stuff\` \`\`\`xl\n${clean(

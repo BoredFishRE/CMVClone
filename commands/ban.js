@@ -3,7 +3,7 @@ const { MessageEmbed } = require("discord.js");
 module.exports = {
   name: "ban",
   description: "haha",
-  execute(message, args, client) {
+  async execute(message, args, client) {
     //ignore this, it's just the error displayer.
     function clean(text) {
       if (typeof text === "string")
@@ -28,7 +28,17 @@ module.exports = {
       if (member) {
         try {
           //Sends message with member name.
-          message.channel.send(`Haha ${member} got absolutley nae naed.`);
+          await member
+            .send(
+              `https://cdn.discordapp.com/attachments/704776253437116498/837069547378442340/youvebeenbanned.gif`
+            )
+            .then(() => {
+              message.channel.send(`Haha ${member} got absolutley nae naed.`);
+            })
+            .catch((error) => {
+              message.channel.send("Can't send messages to that member.");
+              console.log(error);
+            });
         } catch (error) {
           //Error handler
           message.channel.send(

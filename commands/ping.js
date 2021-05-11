@@ -5,9 +5,15 @@ module.exports = {
   description: "Ping tester",
   execute(message, args, client) {
     var ping = Math.round(client.ws.ping) + " ms";
-    let embed = new MessageEmbed()
-      .setColor("#42f2f5")
-      .addField("Pong!", ping, true)
-    message.channel.send(embed);
+    const emojiLoad = client.emojis.cache.get("841727733393391656");
+    const checkPing = ping > "500";
+    if (checkPing == true) {
+      message.react("841727733393391656");
+    }
+    message.channel.send(`${emojiLoad}`).then((msg) => {
+      setTimeout(() => {
+        msg.edit(`Pong! \nPing is ${ping}`);
+      }, 3000);
+    });
   },
 };

@@ -41,6 +41,13 @@ module.exports = {
           let HasP3 = member.roles.cache.some((r) => r.name === "P3");
           let HasP4 = member.roles.cache.some((r) => r.name === "P4");
           let HasP5 = member.roles.cache.some((r) => r.name === "P5");
+          const warnEmbed = new MessageEmbed().setColor("#ff0000").setAuthor(
+            member.user.username,
+            member.user.displayAvatarURL({
+              format: "jpg",
+              dynamic: "true",
+            })
+          );
           //Displays Member info in Console.
           console.log(member);
           //Defines what the case is comparing to. 
@@ -52,7 +59,10 @@ module.exports = {
               //Adds P2
               member.roles.add(P2);
               //Displays confirm message.
-              message.channel.send(`${member} had P1, assigning P2.`);
+              warnEmbed.addField(
+                `${member.user.tag} had P1, assigning P2.`,
+                "2nd warn"
+              );
               break;
             //Checks if user has P2
             case HasP2:
@@ -60,36 +70,46 @@ module.exports = {
               member.roles.remove(P2);
               //Adds P3, you get the idea.
               member.roles.add(P3);
-              message.channel.send(`${member} had P2, assigning P3.`);
+              warnEmbed.addField(
+                `${member.user.tag} had P2, assigning P3.`,
+                "3rd warn"
+              );
               break;
             //Checks if has P3
             case HasP3:
               member.roles.remove(P3);
               member.roles.add(P4);
-              message.channel.send(`${member} had P3, assigning P4.`);
+              warnEmbed.addField(
+                `${member.user.tag} had P3, assigning P4.`,
+                "4th warn"
+              );
               break;
             //Checks if has P4
             case HasP4:
               member.roles.remove(P4);
               member.roles.add(P5);
-              message.channel.send(
-                `${member} had P4, assigning P5. This is this member's last chance.`
+              warnEmbed.addField(
+                `${member.user.tag} had P4, assigning P5. This is this member's last chance.`,
+                "5th warn"
               );
               break;
             //Checks if has P5
             case HasP5:
               //Doesn't do much. Just reminds mods to ban.
-              message.channel.send(
-                `${member} should probably be banned but idk I'm just a bot.`
+              warnEmbed.addField(
+                `${member.user.tag} should probably be banned but idk I'm just a bot.`,
+                "Not gonna lie..."
               );
               break;
             //If Member doesn't have any P roles, add P1.
             default:
               member.roles.add(P1);
-              message.channel.send(
-                `This is ${member}'s first warn. They are now at P1.`
+              warnEmbed.addField(
+                `This is ${member.user.tag}'s first warn. They are now at P1.`,
+                "1st warn."
               );
           }
+          message.channel.send(warnEmbed);
           //Error Handler.
         } catch (error) {
           message.channel.send(
