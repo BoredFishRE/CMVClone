@@ -18,15 +18,18 @@ module.exports = {
     //Checks if executor is actually mod.
     if (
       message.member.roles.cache.some(
-        (role) => role.name === "Allows magic to happen"
+        role => role.name === "Allows magic to happen"
       )
     ) {
       //Gets P# roles. Command can't run without it.
-      let P1 = guild.roles.cache.find((r) => r.name === "P1");
-      let P2 = guild.roles.cache.find((r) => r.name === "P2");
-      let P3 = guild.roles.cache.find((r) => r.name === "P3");
-      let P4 = guild.roles.cache.find((r) => r.name === "P4");
-      let P5 = guild.roles.cache.find((r) => r.name === "P5");
+      let P1 = guild.roles.cache.find(r => r.name === "P1");
+      let P2 = guild.roles.cache.find(r => r.name === "P2");
+      let P3 = guild.roles.cache.find(r => r.name === "P3");
+      let P4 = guild.roles.cache.find(r => r.name === "P4");
+      let P5 = guild.roles.cache.find(r => r.name === "P5");
+      let punishmentRole = guild.roles.cache.find(
+        r => r.name === "⁣           Punishments           ⁣"
+      );
       //Defines member. Switches from Mention and ID. Last one is useless.
       const member =
         message.mentions.members.first() ||
@@ -36,21 +39,37 @@ module.exports = {
       if (member) {
         try {
           //Checks if member has a P role
-          let HasP1 = member.roles.cache.some((r) => r.name === "P1");
-          let HasP2 = member.roles.cache.some((r) => r.name === "P2");
-          let HasP3 = member.roles.cache.some((r) => r.name === "P3");
-          let HasP4 = member.roles.cache.some((r) => r.name === "P4");
-          let HasP5 = member.roles.cache.some((r) => r.name === "P5");
+          let HasP1 = member.roles.cache.some(r => r.name === "P1");
+          let HasP2 = member.roles.cache.some(r => r.name === "P2");
+          let HasP3 = member.roles.cache.some(r => r.name === "P3");
+          let HasP4 = member.roles.cache.some(r => r.name === "P4");
+          let HasP5 = member.roles.cache.some(r => r.name === "P5");
+          let beenPunishedCheck = member.roles.cache.some(
+            r => r.name === "⁣           Punishments           ⁣"
+          );
+          //Creates base warn embeds
           const warnEmbed = new MessageEmbed().setColor("#ff0000").setAuthor(
             member.user.username,
             member.user.displayAvatarURL({
               format: "jpg",
-              dynamic: "true",
+              dynamic: "true"
             })
           );
+          let beenPunished = false;
           //Displays Member info in Console.
           console.log(member);
-          //Defines what the case is comparing to. 
+          //Checks if user has Punishments role
+          if (beenPunishedCheck == true) {
+            member.roles.add(punishmentRole);
+            beenPunished = true;
+            warnEmbed.addField(
+              `This is ${member.user.tag}'s first ever warn.`,
+              "Don't break any more rules... please..."
+            );
+          } else {
+            //Do nothing...
+          }
+          //Defines what the case is comparing to.
           switch (true) {
             //Checks if user has P1
             case HasP1:
@@ -105,7 +124,7 @@ module.exports = {
             default:
               member.roles.add(P1);
               warnEmbed.addField(
-                `This is ${member.user.tag}'s first warn. They are now at P1.`,
+                `${member.user.tag} is now at P1.`,
                 "1st warn."
               );
           }
@@ -140,7 +159,7 @@ module.exports = {
         `This unauthorised usage of mod commands has been reported to feiks with ReportID #${reprtID}`,
         "Leave me alone man, I can't do that.",
         "a",
-        "Do not cite the deep magic to me witch, I was there when it was written.",
+        "Do not cite the deep magic to me witch, I was there when it was written."
       ];
       //Selects random message
       const random = Math.floor(Math.random() * modMessage.length);
@@ -148,5 +167,5 @@ module.exports = {
       //Sends random message.
       message.channel.send(randomMessage);
     }
-  },
+  }
 };

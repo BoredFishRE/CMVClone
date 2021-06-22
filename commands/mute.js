@@ -24,6 +24,9 @@ module.exports = {
       let P3 = message.guild.roles.cache.find((r) => r.name === "P3");
       let P4 = message.guild.roles.cache.find((r) => r.name === "P4");
       let P5 = message.guild.roles.cache.find((r) => r.name === "P5");
+      let punishmentRole = guild.roles.cache.find(
+        r => r.name === "⁣           Punishments           ⁣"
+      );
       const member =
         message.mentions.members.first() ||
         guild.member(args[0]) ||
@@ -35,6 +38,9 @@ module.exports = {
           let HasP3 = member.roles.cache.some((r) => r.name === "P3");
           let HasP4 = member.roles.cache.some((r) => r.name === "P4");
           let HasP5 = member.roles.cache.some((r) => r.name === "P5");
+          let beenPunishedCheck = member.roles.cache.some(
+            r => r.name === "⁣           Punishments           ⁣"
+          );
           const muteEmbed = new MessageEmbed().setColor("#ff0000").setAuthor(
             member.user.username,
             member.user.displayAvatarURL({
@@ -42,6 +48,16 @@ module.exports = {
               dynamic: "true",
             })
           );
+          if (beenPunishedCheck == true) {
+            member.roles.add(punishmentRole);
+            beenPunished = true;
+            warnEmbed.addField(
+              `This is ${member.user.tag}'s first ever mute.`,
+              "Don't break any more rules... please..."
+            );
+          } else {
+            //Do nothing...
+          }
           console.log(member);
           switch (true) {
             case HasP1:
@@ -84,7 +100,7 @@ module.exports = {
               member.roles.add(P3);
               muteEmbed.addField(
                 `${member.user.tag} now has P3.`,
-                "First mute as far as I know."
+                "Assigning P3"
               );
           }
           message.channel.send(muteEmbed)
