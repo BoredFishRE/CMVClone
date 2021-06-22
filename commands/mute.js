@@ -51,7 +51,7 @@ module.exports = {
           if (beenPunishedCheck == false) {
             member.roles.add(punishmentRole);
             beenPunished = true;
-            warnEmbed.addField(
+            muteEmbed.addField(
               `This is ${member.user.tag}'s first ever mute.`,
               "Don't break any more rules... please..."
             );
