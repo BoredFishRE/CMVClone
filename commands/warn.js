@@ -45,7 +45,7 @@ module.exports = {
           let HasP4 = member.roles.cache.some(r => r.name === "P4");
           let HasP5 = member.roles.cache.some(r => r.name === "P5");
           let beenPunishedCheck = member.roles.cache.some(
-            r => r.name === "⁣           Punishments           ⁣"
+            r => r.name === "⁣            Punishments           ⁣"
           );
           //Creates base warn embeds
           const warnEmbed = new MessageEmbed().setColor("#ff0000").setAuthor(
@@ -59,7 +59,7 @@ module.exports = {
           //Displays Member info in Console.
           console.log(member);
           //Checks if user has Punishments role
-          if (beenPunishedCheck == true) {
+          if (beenPunishedCheck == false) {
             member.roles.add(punishmentRole);
             beenPunished = true;
             warnEmbed.addField(

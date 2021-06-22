@@ -48,7 +48,7 @@ module.exports = {
               dynamic: "true",
             })
           );
-          if (beenPunishedCheck == true) {
+          if (beenPunishedCheck == false) {
             member.roles.add(punishmentRole);
             beenPunished = true;
             warnEmbed.addField(
