@@ -1,0 +1,28 @@
+{
+  "name": "cmvclone",
+  "version": "1.0.0",
+  "description": "The bot for the Car Mighty Community",
+  "main": "bot.js",
+  "dependencies": {
+    "discord.js": "^12.5.1",
+    "sequelize": "^6.5.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BoredFishRE/CMVClone.git"
+  },
+  "keywords": [
+    "discord",
+    "bot"
+  ],
+  "author": "BoredFishRE",
+  "license": "MPL-2.0",
+  "bugs": {
+    "url": "https://github.com/BoredFishRE/CMVClone/issues"
+  },
+  "homepage": "https://github.com/BoredFishRE/CMVClone#readme"
+}
