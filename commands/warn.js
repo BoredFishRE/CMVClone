@@ -44,9 +44,7 @@ module.exports = {
           let HasP3 = member.roles.cache.some(r => r.name === "P3");
           let HasP4 = member.roles.cache.some(r => r.name === "P4");
           let HasP5 = member.roles.cache.some(r => r.name === "P5");
-          let beenPunishedCheck = member.roles.cache.some(
-            r => r.name === "⁣            Punishments           ⁣"
-          );
+          let beenPunishedCheck = member.roles.cache.has("817372432976576540")
           //Creates base warn embeds
           const warnEmbed = new MessageEmbed().setColor("#ff0000").setAuthor(
             member.user.username,
@@ -59,14 +57,23 @@ module.exports = {
           //Displays Member info in Console.
           console.log(member);
           //Checks if user has Punishments role
-          if (beenPunishedCheck == false) {
-            member.roles.add(punishmentRole);
-            beenPunished = true;
-            warnEmbed.addField(
-              `This is ${member.user.tag}'s first ever warn.`,
-              "Don't break any more rules... please..."
-            );
-          } else {
+          if (beenPunishedCheck === false) {
+            try {
+              member.roles.add(punishmentRole);
+              beenPunished = true;
+              warnEmbed.addField(
+                `This is ${member.user.tag}'s first ever warn.`,
+                "Don't break any more rules... please..."
+              );
+            } catch (error) {
+              message.channel.send(
+                `Aw maaaaan. I couldn't do the thing I needed to do. <@388813100964642816> should prob know about this. The technical stuff\` \`\`\`xl\n${clean(
+                  error
+                )}\n\`\`\``
+              );
+              console.log(error);
+            }
+          } else if (beenPunishedCheck === true) {
             //Do nothing...
           }
           //Defines what the case is comparing to.

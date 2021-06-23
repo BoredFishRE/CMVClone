@@ -15,47 +15,54 @@ module.exports = {
     let guild = message.guild;
     if (
       message.member.roles.cache.some(
-        (role) => role.name === "Allows magic to happen"
+        role => role.name === "Allows magic to happen"
       )
     ) {
       //This really works the same way as warn.js. If you wanna find out how it works, go to warn.js.
-      let P1 = message.guild.roles.cache.find((r) => r.name === "P1");
-      let P2 = message.guild.roles.cache.find((r) => r.name === "P2");
-      let P3 = message.guild.roles.cache.find((r) => r.name === "P3");
-      let P4 = message.guild.roles.cache.find((r) => r.name === "P4");
-      let P5 = message.guild.roles.cache.find((r) => r.name === "P5");
+      let P1 = message.guild.roles.cache.find(r => r.name === "P1");
+      let P2 = message.guild.roles.cache.find(r => r.name === "P2");
+      let P3 = message.guild.roles.cache.find(r => r.name === "P3");
+      let P4 = message.guild.roles.cache.find(r => r.name === "P4");
+      let P5 = message.guild.roles.cache.find(r => r.name === "P5");
       let punishmentRole = guild.roles.cache.find(
         r => r.name === "⁣           Punishments           ⁣"
       );
       const member =
         message.mentions.members.first() ||
-        guild.member(args[0]) ||
+        c ||
         guild.member(args);
       if (member) {
         try {
-          let HasP1 = member.roles.cache.some((r) => r.name === "P1");
-          let HasP2 = member.roles.cache.some((r) => r.name === "P2");
-          let HasP3 = member.roles.cache.some((r) => r.name === "P3");
-          let HasP4 = member.roles.cache.some((r) => r.name === "P4");
-          let HasP5 = member.roles.cache.some((r) => r.name === "P5");
-          let beenPunishedCheck = member.roles.cache.some(
-            r => r.name === "⁣           Punishments           ⁣"
-          );
+          let HasP1 = member.roles.cache.some(r => r.name === "P1");
+          let HasP2 = member.roles.cache.some(r => r.name === "P2");
+          let HasP3 = member.roles.cache.some(r => r.name === "P3");
+          let HasP4 = member.roles.cache.some(r => r.name === "P4");
+          let HasP5 = member.roles.cache.some(r => r.name === "P5");
+          let beenPunishedCheck = member.roles.cache.has("817372432976576540")
           const muteEmbed = new MessageEmbed().setColor("#ff0000").setAuthor(
             member.user.username,
             member.user.displayAvatarURL({
               format: "jpg",
-              dynamic: "true",
+              dynamic: "true"
             })
           );
-          if (beenPunishedCheck == false) {
-            member.roles.add(punishmentRole);
-            beenPunished = true;
-            muteEmbed.addField(
-              `This is ${member.user.tag}'s first ever mute.`,
-              "Don't break any more rules... please..."
-            );
-          } else {
+          if (beenPunishedCheck === false) {
+            try {
+              member.roles.add(punishmentRole);
+              beenPunished = true;
+              muteEmbed.addField(
+                `This is ${member.user.tag}'s first ever mute.`,
+                "Don't break any more rules... please..."
+              );
+            } catch (error) {
+              message.channel.send(
+                `Aw maaaaan. I couldn't do the thing I needed to do. <@388813100964642816> should prob know about this. The technical stuff\` \`\`\`xl\n${clean(
+                  error
+                )}\n\`\`\``
+              );
+              console.log(error);
+            }
+          } else if (beenPunishedCheck === true) {
             //Do nothing...
           }
           console.log(member);
@@ -79,10 +86,7 @@ module.exports = {
             case HasP3:
               member.roles.remove(P3);
               member.roles.add(P4);
-              muteEmbed.addField(
-                `${member.user.tag} had P3`,
-                "Assigning P4."
-              );
+              muteEmbed.addField(`${member.user.tag} had P3`, "Assigning P4.");
               break;
             case HasP4:
               muteEmbed.addField(
@@ -103,7 +107,7 @@ module.exports = {
                 "Assigning P3"
               );
           }
-          message.channel.send(muteEmbed)
+          message.channel.send(muteEmbed);
         } catch (error) {
           message.channel.send(
             `Aw maaaaan. I couldn't do the thing I needed to do. <@388813100964642816> should prob know about this. The technical stuff\` \`\`\`xl\n${clean(
@@ -130,11 +134,11 @@ module.exports = {
         `This unauthorised usage of mod commands has been reported to feiks with ReportID #${reprtID}`,
         "Leave me alone man, I can't do that.",
         "a",
-        "Do not cite the deep magic to me witch, I was there when it was written.",
+        "Do not cite the deep magic to me witch, I was there when it was written."
       ];
       const random = Math.floor(Math.random() * modMessage.length);
       const randomMessage = modMessage[random];
       message.channel.send(randomMessage);
     }
-  },
+  }
 };
