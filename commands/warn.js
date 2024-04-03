@@ -1,4 +1,6 @@
-const { MessageEmbed } = require("discord.js");
+const {
+  EmbedBuilder
+} = require("discord.js");
 
 module.exports = {
   name: "warn",
@@ -27,8 +29,9 @@ module.exports = {
       let P3 = guild.roles.cache.find(r => r.name === "P3");
       let P4 = guild.roles.cache.find(r => r.name === "P4");
       let P5 = guild.roles.cache.find(r => r.name === "P5");
-      let punishmentRole = guild.roles.cache.find(
-        r => r.name === "⁣           Punishments           ⁣"
+      let punishmentRole = guild.roles.cache.get("817372432976576540");
+      let punishmentRoleTest = guild.roles.cache.get(
+        "1224889397174861884"
       );
       //Defines member. Switches from Mention and ID. Last one is useless.
       const member =
@@ -44,27 +47,28 @@ module.exports = {
           let HasP3 = member.roles.cache.some(r => r.name === "P3");
           let HasP4 = member.roles.cache.some(r => r.name === "P4");
           let HasP5 = member.roles.cache.some(r => r.name === "P5");
+          let beenPunishedTest = member.roles.cache.has("1224889397174861884")
           let beenPunishedCheck = member.roles.cache.has("817372432976576540")
           //Creates base warn embeds
-          const warnEmbed = new MessageEmbed().setColor("#ff0000").setAuthor(
-            member.user.username,
-            member.user.displayAvatarURL({
+          const warnEmbed = new EmbedBuilder().setColor("#ff0000").setAuthor({
+            name: member.user.username,
+            iconURL: member.user.displayAvatarURL({
               format: "jpg",
-              dynamic: "true"
+              dynamic: "true",
             })
-          );
+          });
           let beenPunished = false;
           //Displays Member info in Console.
           console.log(member);
           //Checks if user has Punishments role
-          if (beenPunishedCheck === false) {
+          if (beenPunishedTest === false) {
             try {
-              member.roles.add(punishmentRole);
+              member.roles.add(punishmentRoleTest);
               beenPunished = true;
-              warnEmbed.addField(
-                `This is ${member.user.tag}'s first ever warn.`,
-                "Don't break any more rules... please..."
-              );
+              warnEmbed.addFields({
+                name: `This is ${member.user.tag}'s first ever warn.`,
+                value: "Don't break any more rules... please..."
+              });
             } catch (error) {
               message.channel.send(
                 `Aw maaaaan. I couldn't do the thing I needed to do. <@388813100964642816> should prob know about this. The technical stuff\` \`\`\`xl\n${clean(
@@ -73,7 +77,7 @@ module.exports = {
               );
               console.log(error);
             }
-          } else if (beenPunishedCheck === true) {
+          } else if (beenPunishedTest === true) {
             //Do nothing...
           }
           //Defines what the case is comparing to.
@@ -85,57 +89,59 @@ module.exports = {
               //Adds P2
               member.roles.add(P2);
               //Displays confirm message.
-              warnEmbed.addField(
-                `${member.user.tag} had P1, assigning P2.`,
-                "2nd warn"
-              );
+              warnEmbed.addFields({
+                name: `${member.user.tag} had P1, assigning P2.`,
+                value: "2nd warn"
+              });
               break;
-            //Checks if user has P2
+              //Checks if user has P2
             case HasP2:
               //Remove P2
               member.roles.remove(P2);
               //Adds P3, you get the idea.
               member.roles.add(P3);
-              warnEmbed.addField(
-                `${member.user.tag} had P2, assigning P3.`,
-                "3rd warn"
-              );
+              warnEmbed.addFields({
+                name: `${member.user.tag} had P2, assigning P3.`,
+                value: "3rd warn"
+              });
               break;
-            //Checks if has P3
+              //Checks if has P3
             case HasP3:
               member.roles.remove(P3);
               member.roles.add(P4);
-              warnEmbed.addField(
-                `${member.user.tag} had P3, assigning P4.`,
-                "4th warn"
-              );
+              warnEmbed.addFields({
+                name: `${member.user.tag} had P3, assigning P4.`,
+                value: "4th warn"
+              });
               break;
-            //Checks if has P4
+              //Checks if has P4
             case HasP4:
               member.roles.remove(P4);
               member.roles.add(P5);
-              warnEmbed.addField(
-                `${member.user.tag} had P4, assigning P5. This is this member's last chance.`,
-                "5th warn"
-              );
+              warnEmbed.addFields({
+                name: `${member.user.tag} had P4, assigning P5. This is this member's last chance.`,
+                value: "5th warn"
+              });
               break;
-            //Checks if has P5
+              //Checks if has P5
             case HasP5:
               //Doesn't do much. Just reminds mods to ban.
-              warnEmbed.addField(
-                `${member.user.tag} should probably be banned but idk I'm just a bot.`,
-                "Not gonna lie..."
-              );
+              warnEmbed.addFields({
+                name: `${member.user.tag} should probably be banned but idk I'm just a bot.`,
+                value: "Not gonna lie..."
+              });
               break;
-            //If Member doesn't have any P roles, add P1.
+              //If Member doesn't have any P roles, add P1.
             default:
               member.roles.add(P1);
-              warnEmbed.addField(
-                `${member.user.tag} is now at P1.`,
-                "1st warn."
-              );
+              warnEmbed.addFields({
+                name: `This is ${member.user.tag}'s first warn. They are now at P1.`,
+                value: "1st warn."
+              });
           }
-          message.channel.send(warnEmbed);
+          message.channel.send({
+            embeds: [warnEmbed]
+          });
           //Error Handler.
         } catch (error) {
           message.channel.send(

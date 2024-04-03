@@ -1,4 +1,6 @@
-const { MessageEmbed } = require("discord.js");
+const {
+  EmbedBuilder
+} = require("discord.js");
 
 module.exports = {
   name: "mute",
@@ -24,8 +26,9 @@ module.exports = {
       let P3 = message.guild.roles.cache.find(r => r.name === "P3");
       let P4 = message.guild.roles.cache.find(r => r.name === "P4");
       let P5 = message.guild.roles.cache.find(r => r.name === "P5");
-      let punishmentRole = guild.roles.cache.find(
-        r => r.name === "⁣           Punishments           ⁣"
+      let punishmentRole = guild.roles.cache.get("817372432976576540");
+      let punishmentRoleTest = guild.roles.cache.get(
+        "1224889397174861884"
       );
       const member =
         message.mentions.members.first() ||
@@ -38,22 +41,23 @@ module.exports = {
           let HasP3 = member.roles.cache.some(r => r.name === "P3");
           let HasP4 = member.roles.cache.some(r => r.name === "P4");
           let HasP5 = member.roles.cache.some(r => r.name === "P5");
+          let beenPunishedTest = member.roles.cache.has("1224889397174861884")
           let beenPunishedCheck = member.roles.cache.has("817372432976576540")
-          const muteEmbed = new MessageEmbed().setColor("#ff0000").setAuthor(
-            member.user.username,
-            member.user.displayAvatarURL({
+          const muteEmbed = new EmbedBuilder().setColor("#ff0000").setAuthor({
+            name: member.user.username,
+            iconURL: member.user.displayAvatarURL({
               format: "jpg",
-              dynamic: "true"
+              dynamic: "true",
             })
-          );
-          if (beenPunishedCheck === false) {
+          });
+          if (beenPunishedTest === false) {
             try {
-              member.roles.add(punishmentRole);
+              member.roles.add(punishmentRoleTest);
               beenPunished = true;
-              muteEmbed.addField(
-                `This is ${member.user.tag}'s first ever mute.`,
-                "Don't break any more rules... please..."
-              );
+              muteEmbed.addFields({
+                name: `This is ${member.user.tag}'s first ever mute.`,
+                value: "Don't break any more rules... please..."
+              });
             } catch (error) {
               message.channel.send(
                 `Aw maaaaan. I couldn't do the thing I needed to do. <@388813100964642816> should prob know about this. The technical stuff\` \`\`\`xl\n${clean(
@@ -62,7 +66,7 @@ module.exports = {
               );
               console.log(error);
             }
-          } else if (beenPunishedCheck === true) {
+          } else if (beenPunishedTest === true) {
             //Do nothing...
           }
           console.log(member);
@@ -70,44 +74,49 @@ module.exports = {
             case HasP1:
               member.roles.remove(P1);
               member.roles.add(P3);
-              muteEmbed.addField(
-                `${member.user.tag} now has P3.`,
-                "Removed P1."
-              );
+              muteEmbed.addFields({
+                name: `${member.user.tag} now has P3.`,
+                value: "Removed P1."
+              });
               break;
             case HasP2:
               member.roles.remove(P2);
               member.roles.add(P3);
-              muteEmbed.addField(
-                `${member.user.tag} now has P3.`,
-                "P2 removed."
-              );
+              muteEmbed.addFields({
+                name: `${member.user.tag} now has P3.`,
+                value: "P2 removed."
+              });
               break;
             case HasP3:
               member.roles.remove(P3);
               member.roles.add(P4);
-              muteEmbed.addField(`${member.user.tag} had P3`, "Assigning P4.");
+              muteEmbed.addFields({
+                name: `${member.user.tag} had P3`,
+                value: "Assigning P4."
+              });
               break;
             case HasP4:
-              muteEmbed.addField(
-                `${member.user.tag} has P4.`,
-                "No action was taken."
-              );
+              muteEmbed.addFields({
+                name: `${member.user.tag} has P4.`,
+                value: "No action was taken."
+              });
               break;
             case HasP5:
-              muteEmbed.addField(
-                `${member.user.tag} has P5.`,
-                `No action was taken.`
-              );
+              muteEmbed.addFields({
+                name: `${member.user.tag} has P5.`,
+                value: `No action was taken.`
+              });
               break;
             default:
               member.roles.add(P3);
-              muteEmbed.addField(
-                `${member.user.tag} now has P3.`,
-                "Assigning P3"
-              );
+              muteEmbed.addFields({
+                name: `${member.user.tag} now has P3.`,
+                value: "Assigning P3"
+              });
           }
-          message.channel.send(muteEmbed);
+          message.channel.send({
+            embeds: [muteEmbed]
+          });
         } catch (error) {
           message.channel.send(
             `Aw maaaaan. I couldn't do the thing I needed to do. <@388813100964642816> should prob know about this. The technical stuff\` \`\`\`xl\n${clean(

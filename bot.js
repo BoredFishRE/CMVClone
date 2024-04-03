@@ -1,9 +1,21 @@
 const fs = require("fs");
 const Discord = require("discord.js");  
-const { Client, Intents } = require("discord.js");
-client = new Client({
-  ws: { intents: Intents.ALL },
+const { Client, GatewayIntentBits, Partials } = require('discord.js');
+client = new Client({ 
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent,
+    GatewayIntentBits.GuildMembers,
+    GatewayIntentBits.GuildPresences
+  ],
+  partials: [
+    Partials.Message,
+    Partials.Channel,
+    Partials.Reaction
+  ]
 });
+//const { Sequelize } = require("sequelize");
 const config = require("./config.json");
 const { prefix } = require("./config.json");
 client.commands = new Discord.Collection();
@@ -39,7 +51,7 @@ for (const file of commandFiles) {
   client.commands.set(command.name, command);
 }
 
-client.on("message", (message) => {
+client.on("messageCreate", message => {
   function clean(text) {
     if (typeof text === "string")
       return text

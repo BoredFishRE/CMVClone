@@ -4,7 +4,7 @@
   "description": "The bot for the Car Mighty Community",
   "main": "bot.js",
   "dependencies": {
-    "discord.js": "^12.5.3",
+    "discord.js": "^14.14.1",
     "node-wit": "^6.0.1",
     "sequelize": "^6.29.0"
   },
