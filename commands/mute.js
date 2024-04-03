@@ -32,8 +32,8 @@ module.exports = {
       );
       const member =
         message.mentions.members.first() ||
-        c ||
-        guild.member(args);
+        message.guild.members.cache.get(args[0]) ||
+        message.guild.members.cache.get(args);
       if (member) {
         try {
           let HasP1 = member.roles.cache.some(r => r.name === "P1");
@@ -50,9 +50,9 @@ module.exports = {
               dynamic: "true",
             })
           });
-          if (beenPunishedTest === false) {
+          if (beenPunishedCheck === false) {
             try {
-              member.roles.add(punishmentRoleTest);
+              member.roles.add(punishmentRole);
               beenPunished = true;
               muteEmbed.addFields({
                 name: `This is ${member.user.tag}'s first ever mute.`,
@@ -66,7 +66,7 @@ module.exports = {
               );
               console.log(error);
             }
-          } else if (beenPunishedTest === true) {
+          } else if (beenPunishedCheck === true) {
             //Do nothing...
           }
           console.log(member);

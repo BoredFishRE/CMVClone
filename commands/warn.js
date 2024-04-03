@@ -61,9 +61,9 @@ module.exports = {
           //Displays Member info in Console.
           console.log(member);
           //Checks if user has Punishments role
-          if (beenPunishedTest === false) {
+          if (beenPunishedCheck === false) {
             try {
-              member.roles.add(punishmentRoleTest);
+              member.roles.add(punishmentRole);
               beenPunished = true;
               warnEmbed.addFields({
                 name: `This is ${member.user.tag}'s first ever warn.`,
@@ -77,7 +77,7 @@ module.exports = {
               );
               console.log(error);
             }
-          } else if (beenPunishedTest === true) {
+          } else if (beenPunishedCheck === true) {
             //Do nothing...
           }
           //Defines what the case is comparing to.
