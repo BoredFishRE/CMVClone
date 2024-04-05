@@ -36,8 +36,8 @@ module.exports = {
       //Defines member. Switches from Mention and ID. Last one is useless.
       const member =
         message.mentions.members.first() ||
-        guild.member(args[0]) ||
-        guild.member(args);
+        message.guild.members.cache.get(args[0]) ||
+        message.guild.members.cache.get(args);
       //Checks if they actually mentioned someone/user exists
       if (member) {
         try {

@@ -1,4 +1,6 @@
-const { EmbedBuilder } = require("discord.js");
+const {
+  EmbedBuilder
+} = require("discord.js");
 
 module.exports = {
   name: "ban",
@@ -23,8 +25,8 @@ module.exports = {
       //defines member. Switches between Mention and ID. Last one is smth I just have there.
       const member =
         message.mentions.members.first() ||
-        guild.member(args[0]) ||
-        guild.member(args);
+        message.guild.members.cache.get(args[0]) ||
+        message.guild.members.cache.get(args);
       if (member) {
         try {
           //Sends message with member name.
